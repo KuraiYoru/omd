@@ -11,10 +11,6 @@ def task_1():
     print(f"сколько разных товаров на обоих складах вместе: {len(moscow | kazan)}")
 
 
-task_1()
-print()
-
-
 def task_2():
     queries = [
         "чехол",
@@ -37,10 +33,6 @@ def task_2():
     print(f"какие запросы встретились один раз: {single_queries}")
 
 
-task_2()
-print()
-
-
 def task_3():
     orders = [
         {"id": 1, "buyer": "anya", "status": "delivered", "amount": 900},
@@ -50,21 +42,17 @@ def task_3():
         {"id": 5, "buyer": "boris", "status": "delivered", "amount": 700},
         {"id": 6, "buyer": "gleb", "status": "returned", "amount": 2_100},
     ]
-    sum_of_returned = sum([i["amount"] for i in orders if i["status"] == "returned"])
-    users_returned_stuff = {i["id"] for i in orders if i["status"] == "returned"}
+    sum_of_returned = sum([order["amount"] for order in orders if order["status"] == "returned"])
+    users_returned_stuff = {order["buyer"] for order in orders if order["status"] == "returned"}
     num_of_orders_per_person = defaultdict(int)
-    for i in orders:
-        num_of_orders_per_person[i["id"]] += 1 if i["status"] == "delivered" else 0
-    costs_of_delivered_orders = [i["amount"] for i in orders if i["status"] == "delivered"]
+    for order in orders:
+        num_of_orders_per_person[order["buyer"]] += 1 if order["status"] == "delivered" else 0
+    costs_of_delivered_orders = [order["amount"] for order in orders if order["status"] == "delivered"]
     print(f"на какую сумму оформили возвраты: {sum_of_returned}")
     print(f"кто хотя бы раз вернул заказ: {users_returned_stuff}")
     # Обернул в dict потому что выводилось defaultdict(<class 'int'> ...
     print(f"сколько заказов доставлено покупателю: {dict(num_of_orders_per_person)}")
     print(f"средний чек доставленных заказов: {sum(costs_of_delivered_orders) / len(costs_of_delivered_orders)}")
-
-
-task_3()
-print()
 
 
 def task_4():
@@ -76,17 +64,13 @@ def task_4():
         {"day": "пт", "orders": 30, "revenue": 48_000, "returns": 3},
     ]
     all_week_revenue = sum([i["revenue"] for i in days])
-    biggest_revenue_day = max([[i["day"], i["revenue"]] for i in days], key=lambda x: x[1])
-    avg_revenue_per_day = [[i["day"], i["revenue"] / i["orders"]] for i in days]
-    days_of_returns = [i["day"] for i in days if i["returns"] / i["orders"] > 0.2]
+    biggest_revenue_day = max([[day["day"], day["revenue"]] for day in days], key=lambda x: x[1])
+    avg_revenue_per_day = [[day["day"], day["revenue"] / day["orders"]] for day in days]
+    days_of_returns = [day["day"] for day in days if day["returns"] / day["orders"] > 0.2]
     print(f"выручка за всю неделю: {all_week_revenue}")
     print(f"день с самой большой выручкой: {biggest_revenue_day[0]}")
     print(f"средняя выручка на один заказ в каждый день: {avg_revenue_per_day}")
     print(f"дни, где возвратов больше 20% заказов: {days_of_returns}")
-
-
-task_4()
-print()
 
 
 def task_5():
@@ -122,4 +106,13 @@ def task_5():
     print(f"какую долю всех отзывов составляют отзывы на 1 или 2 звезды : {num_stuff_of_one_two_star / len(reviews)}")
 
 
-task_5()
+if __name__ == "__main__":
+    task_1()
+    print()
+    task_2()
+    print()
+    task_3()
+    print()
+    task_4()
+    print()
+    task_5()
