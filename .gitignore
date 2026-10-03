@@ -61,3 +61,6 @@ coverage.xml
 # Logs & Databases
 *.log
 *.sqlite3
+
+.flake8
+pyproject.toml
